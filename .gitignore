@@ -13,3 +13,7 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+local.db
+.env
+.DS_Store
+__debug_bin
