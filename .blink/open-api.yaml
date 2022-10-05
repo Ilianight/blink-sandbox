@@ -1,0 +1,3912 @@
+openapi: 3.0.1
+info:
+  title: Protected API
+  version: v1
+paths:
+  /v1/api/verify-account-username:
+    post:
+      tags:
+        - Account
+      operationId: VerifyAccountUsername
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VerifyAccountUsernameDTO"
+      responses:
+        "204":
+          description: Success
+
+  /v1/api/accounts/{accountId}:
+    get:
+      tags:
+        - Account
+      operationId: GetAccountById
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountDTO"
+    put:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Account
+      operationId: UpdateAccount
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountDTO"
+    delete:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Account
+      operationId: DeleteAccount
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountDTO"
+  /v1/api/accounts:
+    get:
+      security:
+        - oauth2:
+            - write:admin
+      tags:
+        - Account
+      operationId: GetAccountsqs
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: search
+          in: query
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AccountDTO"
+    post:
+      tags:
+        - Account
+      operationId: CreateAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountDTO"
+  /v1/api/external-accounts:
+    post:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Account
+      operationId: CreateExternalAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountDTO"
+  /v1/api/advertisements/{advertisementId}:
+    get:
+      tags:
+        - Advertisement
+      operationId: GetAdvertisementById
+      parameters:
+        - name: advertisementId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdvertisementDTO"
+    put:
+      security:
+        - oauth2:
+            - write:admin
+      tags:
+        - Advertisement
+      operationId: UpdateAdvertisement
+      parameters:
+        - name: advertisementId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdvertisementDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdvertisementDTO"
+    delete:
+      security:
+        - oauth2:
+            - write:admin
+      tags:
+        - Advertisement
+      operationId: DeleteAdvertisement
+      parameters:
+        - name: advertisementId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdvertisementDTO"
+  /v1/api/advertisements:
+    get:
+      security:
+        - oauth2:
+            - write:admin
+      tags:
+        - Advertisement
+      operationId: GetAdvertisements
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: search
+          in: query
+          schema:
+            type: string
+            nullable: true
+        - name: universities
+          in: query
+          schema:
+            type: string
+            nullable: true
+        - name: faculties
+          in: query
+          schema:
+            type: string
+            nullable: true
+        - name: schoolyears
+          in: query
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AdvertisementDTO"
+    post:
+      security:
+        - oauth2:
+            - write:admin
+      tags:
+        - Advertisement
+      operationId: CreateAdvertisement
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdvertisementDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdvertisementDTO"
+  /v1/api/advertisements/all:
+    get:
+      security:
+        - oauth2:
+            - write:admin
+      tags:
+        - Advertisement
+      operationId: GetAllAdvertisements
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: search
+          in: query
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AdvertisementDTO"
+
+  /v1/api/accounts/{accountId}/advertisements:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Advertisement
+      operationId: GetAdvertisementByAccountId
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: currentPodcast
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: startTime
+          in: query
+          schema:
+            type: number
+            format: double
+        - name: previous_podcast
+          in: query
+          schema:
+            type: string
+            nullable: true
+        - name: previous_time
+          in: query
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdvertisementDTO"
+  /v1/api/podcasts/{podcastId}/chapters/{chapterId}:
+    get:
+      tags:
+        - Chapter
+      operationId: GetChapterById
+      parameters:
+        - name: podcastId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: chapterId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChapterDTO"
+    put:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Chapter
+      operationId: UpdateChapter
+      parameters:
+        - name: podcastId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: chapterId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChapterDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChapterDTO"
+    delete:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Chapter
+      operationId: DeleteChapter
+      parameters:
+        - name: podcastId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: chapterId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChapterDTO"
+  /v1/api/podcasts/{podcastId}/chapters:
+    get:
+      tags:
+        - Chapter
+      operationId: GetChaptersByPodcast
+      parameters:
+        - name: podcastId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ChapterDTO"
+    post:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Chapter
+      operationId: CreateChapter
+      parameters:
+        - name: podcastId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChapterDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChapterDTO"
+  /v1/api/accounts/{accountId}/tags:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Tag
+      operationId: GetTagsByAccount
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TagDTO"
+    post:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Tag
+      operationId: CreateAccountTag
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TagDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TagDTO"
+  /v1/api/podcasts/{podcastId}/likes:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Account
+      operationId: GetPodcastLikeAccountsByPodcastId
+      parameters:
+        - name: podcastId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AccountDTO"
+    post:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Podcast
+      operationId: CreateLikePodcast
+      parameters:
+        - name: podcastId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PodcastDTO"
+  /v1/api/podcasts/{podcastId}/unlike:
+    delete:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Podcast
+      operationId: DeleteLikePodcast
+      parameters:
+        - name: podcastId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "204":
+          description: Success
+  /v1/api/home-recommendations:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Podcast
+      operationId: GetPodcastRecommendationsByAccountId
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RecommendationDTO"
+  /v1/api/tags/{tagId}/podcast-recommandations:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Podcast
+      operationId: GetPodcastRecommendationsByTagId
+      parameters:
+        - name: tagId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            nullable: true
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchItemPagingDTO"
+  /v1/api/comments/{commentId}/like:
+    post:
+      tags:
+        - Comment
+      operationId: CreateLikeComment
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CommentDTO"
+  /v1/api/comments/{commentId}/liked:
+    post:
+      tags:
+        - Comment
+      operationId: CreateLikedComment
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CommentDTO"
+  /v1/api/comments/{commentId}/unlike:
+    delete:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Comment
+      operationId: DeleteLikeComment
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "204":
+          description: Success
+  /v1/api/account/{accountId}/tags/{tagId}:
+    delete:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Tag
+      operationId: DeleteAccountTag
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: tagId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TagDTO"
+  /v1/api/accounts/{accountId}/my-podcasts:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Podcast
+      operationId: GetPodcastsByCreatorId
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PodcastPagingDTO"
+  /v1/api/accounts/{accountId}/my-playlists:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Playlist
+      operationId: GetPlaylistsByCreatorId
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: number
+            nullable: true
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: number
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlaylistPagingDTO"
+  /v1/api/accounts/{accountId}/subscribe:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Account
+      operationId: GetSubscribedAccounts
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AccountDTO"
+    post:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Account
+      operationId: CreateSubscribeToAccount
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountDTO"
+  /v1/api/accounts/{accountId}/subscribe/{subAccountId}:
+    delete:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Account
+      operationId: DeleteSubscriberAccount
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: subAccountId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountDTO"
+  /v1/api/accounts/{accountId}/subscribe-to-me:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Account
+      operationId: GetAccountsSubscribedToMe
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AccountDTO"
+  /v1/api/playlist-recommendations:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Playlist
+      operationId: GetPlaylistRecommandations
+      parameters:
+        - name: masterclass
+          in: query
+          schema:
+            type: boolean
+            nullable: true
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: number
+            nullable: true
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: number
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlaylistPagingDTO"
+  /v1/api/podcast-recommendations:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Podcast
+      operationId: GetPodcastRecommandations
+      parameters:
+        - name: masterclass
+          in: query
+          schema:
+            type: boolean
+            nullable: true
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: number
+            nullable: true
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: number
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PodcastPagingDTO"
+  /v1/api/current-podcast:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - CurrentPodcast
+      operationId: GetCurrentPodcast
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PodcastDTO"
+  /v1/api/accounts/{accountId}/devices:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Device
+      operationId: GetDevicesByAccountId
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DeviceDTO"
+    post:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Device
+      operationId: CreateDevice
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeviceDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeviceDTO"
+  /v1/api/faculties/{facultyId}:
+    get:
+      tags:
+        - Faculty
+      operationId: GetFacultyById
+      parameters:
+        - name: facultyId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FacultyDTO"
+
+  /v1/api/faculties:
+    get:
+      tags:
+        - Faculty
+      operationId: GetFaculties
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: search
+          in: query
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FacultyDTO"
+    post:
+      security:
+        - oauth2:
+            - write:admin
+      tags:
+        - Faculty
+      operationId: CreateFaculty
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FacultyDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FacultyDTO"
+  /v1/api/files:
+    post:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - File
+      operationId: CreateFile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FileDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FileDTO"
+  /v1/api/me:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Account
+      operationId: GetMe
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountDTO"
+  /v1/api/notifications/{notificationId}:
+    get:
+      security:
+        - oauth2:
+            - write:admin
+      tags:
+        - Notification
+      operationId: GetNotificationById
+      parameters:
+        - name: notificationId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationDTO"
+  /v1/api/notifications:
+    get:
+      security:
+        - oauth2:
+            - write:admin
+      tags:
+        - Notification
+      operationId: GetNotifications
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: search
+          in: query
+          schema:
+            type: string
+            nullable: true
+        - name: universities
+          in: query
+          schema:
+            type: string
+            nullable: true
+        - name: faculties
+          in: query
+          schema:
+            type: string
+            nullable: true
+        - name: schoolyears
+          in: query
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/NotificationDTO"
+    post:
+      security:
+        - oauth2:
+            - write:admin
+      tags:
+        - Notification
+      operationId: CreateNotifications
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateNotificationDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationDTO"
+
+  /v1/api/notification/all:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Notification
+      operationId: GetAllNotifications
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/NotificationDTO"
+
+  /v1/api/accounts/monetization:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Account
+      operationId: GetMonetizationByAccountId
+      parameters:
+        - name: accountId
+          in: query
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int64
+                default: -1
+
+  /v1/api/podcasts/{podcastId}:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Podcast
+      operationId: GetPodcastById
+      parameters:
+        - name: podcastId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PodcastDTO"
+    put:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Podcast
+      operationId: UpdatePodcast
+      parameters:
+        - name: podcastId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PodcastDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PodcastDTO"
+    delete:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Podcast
+      operationId: DeletePodcast
+      parameters:
+        - name: podcastId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PodcastDTO"
+  /v1/api/podcasts-by-state:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Podcast
+      operationId: GetPodcastsByState
+      parameters:
+        - name: podcastState
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/PodcastState"
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: search
+          in: query
+          schema:
+            type: string
+            nullable: true
+        - name: masterclass
+          in: query
+          schema:
+            type: boolean
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PodcastDTO"
+  /v1/api/playlist/podcast/{podcastId}:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Playlist
+      operationId: GetPlaylistsWithPodcastId
+      parameters:
+        - name: podcastId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: search
+          in: query
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PlaylistDTO"
+  /v1/api/podcasts:
+    get:
+      tags:
+        - Podcast
+      operationId: GetPodcasts
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: search
+          in: query
+          schema:
+            type: string
+            nullable: true
+        - name: isUploaded
+          in: query
+          schema:
+            type: boolean
+            default: true
+        - name: masterClass
+          in: query
+          schema:
+            type: boolean
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PodcastDTO"
+    post:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Podcast
+      operationId: CreatePodcast
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePodcastDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PodcastDTO"
+  /v1/api/search-by-university:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Search
+      operationId: GetSearchesByUniversity
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: number
+            nullable: true
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: number
+            nullable: true
+        - name: itemType
+          in: query
+          schema:
+            type: string
+            nullable: true
+        - name: universities
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+              format: uuid
+            nullable: true
+        - name: faculties
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+              format: uuid
+            nullable: true
+        - name: schoolyears
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+              format: uuid
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchItemPagingDTO"
+  /v1/api/search-by-theme:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Search
+      operationId: GetSearchesByTheme
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: number
+            nullable: true
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: number
+            nullable: true
+        - name: itemType
+          in: query
+          schema:
+            type: string
+            nullable: true
+        - name: themeId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchItemPagingDTO"
+  /v1/api/accounts/{accountId}/podcasts:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Podcast
+      operationId: GetPodcastsByAccountId
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: onlySaved
+          in: query
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: number
+            nullable: true
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: number
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PodcastDTO"
+    post:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Podcast
+      operationId: CreateAccountPodcast
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PodcastDTO"
+
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PodcastDTO"
+
+  /v1/api/accounts/{accountId}/podcasts/{podcastId}:
+    put:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Podcast
+      operationId: UpdateAccountPodcast
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: podcastId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PodcastDTO"
+
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PodcastDTO"
+    delete:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Podcast
+      operationId: DeleteAccountPodcast
+      parameters:
+        - name: podcastId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PodcastDTO"
+  /v1/api/purchases:
+    get:
+      security:
+        - oauth2:
+            - write:admin
+      tags:
+        - Purchase
+      operationId: GetPurchases
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: search
+          in: query
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PurchaseDTO"
+    post:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Purchase
+      operationId: CreatePurchase
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PurchaseDTO"
+
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PurchaseDTO"
+
+  /v1/api/school-years/{schoolyearId}:
+    get:
+      tags:
+        - SchoolYear
+      operationId: GetSchoolYearById
+      parameters:
+        - name: schoolyearId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SchoolYearDTO"
+  /v1/api/school-years:
+    get:
+      tags:
+        - SchoolYear
+      operationId: GetSchoolYears
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: search
+          in: query
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SchoolYearDTO"
+    post:
+      security:
+        - oauth2:
+            - write:admin
+      tags:
+        - University
+      operationId: CreateSchoolYear
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SchoolYearDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SchoolYearDTO"
+  /v1/api/stats:
+    get:
+      security:
+        - oauth2:
+            - write:admin
+      tags:
+        - Stats
+      operationId: GetStat
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatsDTO"
+  /v1/api/universities/{universityId}:
+    get:
+      tags:
+        - University
+      operationId: GetUniversityById
+      parameters:
+        - name: universityId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UniversityDTO"
+  /v1/api/universities:
+    get:
+      tags:
+        - University
+      operationId: GetUniversities
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: search
+          in: query
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UniversityPagingDTO"
+    post:
+      security:
+        - oauth2:
+            - write:admin
+      tags:
+        - University
+      operationId: CreateUniversity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UniversityDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UniversityDTO"
+  /v1/api/podcasts/{podcastId}/tags:
+    get:
+      tags:
+        - Tag
+      operationId: GetTagsByPodcast
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: search
+          in: query
+          schema:
+            type: string
+            nullable: true
+        - name: tagType
+          in: query
+          schema:
+            type: string
+            nullable: true
+        - name: podcastId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TagDTO"
+    post:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Tag
+      operationId: CreatePodcastTag
+      parameters:
+        - name: podcastId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TagDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TagDTO"
+  /v1/api/podcasts/{podcastId}/tags/{tagId}:
+    delete:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Tag
+      operationId: DeletePodcastTag
+      parameters:
+        - name: podcastId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: tagId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TagDTO"
+  /v1/api/tags:
+    get:
+      tags:
+        - Tag
+      operationId: GetTags
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: search
+          in: query
+          schema:
+            type: string
+            nullable: true
+        - name: tagType
+          in: query
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TagPagingDTO"
+    post:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Tag
+      operationId: CreateTag
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TagDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TagDTO"
+  /v1/api/playlists:
+    get:
+      tags:
+        - Playlist
+      operationId: GetPlaylists
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: search
+          in: query
+          schema:
+            type: string
+            nullable: true
+        - name: accountId
+          in: query
+          schema:
+            type: string
+            format: uuid
+            nullable: true
+        - name: masterClass
+          in: query
+          schema:
+            type: boolean
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PlaylistDTO"
+    post:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Playlist
+      operationId: CreatePlaylist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlaylistDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlaylistDTO"
+  /v1/api/playlists/{playlistId}:
+    get:
+      tags:
+        - Playlist
+      operationId: GetPlaylistById
+      parameters:
+        - name: playlistId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlaylistDTO"
+    put:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Playlist
+      operationId: UpdatePlaylist
+      parameters:
+        - name: playlistId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlaylistDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlaylistDTO"
+    delete:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Playlist
+      operationId: DeletePlaylist
+      parameters:
+        - name: playlistId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlaylistDTO"
+  /v1/api/playlists/{playlistId}/podcasts:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Podcast
+      operationId: GetPodcastsByPlaylistId
+      parameters:
+        - name: playlistId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PodcastDTO"
+    delete:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Podcast
+      operationId: DeletePlaylistPodcast
+      parameters:
+        - name: playlistId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: podcastIds
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Success
+  /v1/api/comments/{commentId}/responses:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Comment
+      operationId: GetCommentResponsesByCommentId
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            nullable: false
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CommentDTO"
+  /v1/api/podcasts/{podcastId}/comments:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Comment
+      operationId: GetCommentsByPodcastId
+      parameters:
+        - name: podcastId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            nullable: false
+        - name: withResponse
+          in: query
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+            default: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CommentDTO"
+    post:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Comment
+      operationId: CreateComment
+      parameters:
+        - name: podcastId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CommentDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CommentDTO"
+  /v1/api/podcasts/cursus:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Podcast
+      operationId: GetAllPodcastsByCursus
+      parameters:
+        - name: universities
+          in: query
+          schema:
+            type: string
+            nullable: true
+        - name: faculties
+          in: query
+          schema:
+            type: string
+            nullable: true
+        - name: schoolYears
+          in: query
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PodcastDTO"
+  /v1/api/podcasts/{podcastId}/comment/{commentId}:
+    put:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Comment
+      operationId: UpdateComment
+      parameters:
+        - name: podcastId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CommentDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CommentDTO"
+    delete:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Comment
+      operationId: DeleteComment
+      parameters:
+        - name: podcastId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CommentDTO"
+  /v1/api/accounts/{accountId}/search/{searchId}:
+    delete:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Search
+      operationId: DeleteAccountSearch
+      parameters:
+        - name: searchId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountDTO"
+  /v1/api/accounts/{accountId}/search:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Search
+      operationId: GetSearchesByAccountId
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: itemType
+          in: query
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchItemPagingDTO"
+    post:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Search
+      operationId: AddSearchForAccountId
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchItemDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchItemDTO"
+  /v1/api/search-all:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Search
+      operationId: SearchAll
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: search
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: searchType
+          in: query
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchItemPagingDTO"
+  /v1/api/cursus:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Cursus
+      operationId: GetCursus
+      parameters:
+        - name: universityId
+          in: query
+          schema:
+            type: string
+        - name: facultyId
+          in: query
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: search
+          in: query
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CursusDTO"
+  /v1/api/podcasts/{podcastId}/cursus:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Cursus
+      operationId: GetAllCursusByPodcastId
+      parameters:
+        - name: podcastId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CursusDTO"
+  /v1/api/accounts/cursus:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Cursus
+      operationId: GetAllCursusByAccountId
+      parameters:
+        - name: accountId
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CursusPagingDTO"
+
+  /v1/api/accounts/cursus/{cursusId}:
+    post:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Cursus
+      operationId: CreateAccountCursus
+      parameters:
+        - name: cursusId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CursusDTO"
+    delete:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Cursus
+      operationId: DeleteAccountCursus
+      parameters:
+        - name: cursusId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "204":
+          description: Success
+  /v1/api/accounts/{accountId}/playlists:
+    get:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Playlist
+      operationId: GetPlaylistsByAccountId
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PlaylistDTO"
+    post:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Playlist
+      operationId: CreateAccountPlaylist
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlaylistDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlaylistDTO"
+  /v1/api/accounts/{accountId}/playlist/{playlistId}:
+    delete:
+      security:
+        - oauth2:
+            - write:basic
+      tags:
+        - Playlist
+      operationId: DeleteAccountPlaylist
+      parameters:
+        - name: playlistId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlaylistDTO"
+  /v1/api/configuration:
+    get:
+      tags:
+        - Configuration
+      operationId: GetConfiguration
+      parameters:
+        - name: os
+          in: query
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: version
+          in: query
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConfigurationDTO"
+  /v1/api/configurations/latest:
+    get:
+      tags:
+        - Configuration
+      operationId: GetLatestConfiguration
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConfigurationDTO"
+    put:
+      tags:
+        - Configuration
+      operationId: UpdateAdsFromLastConfiguration
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConfigurationDTO"
+  /v1/api/configurations:
+    get:
+      security:
+        - oauth2:
+            - write:admin
+      tags:
+        - Configuration
+      operationId: GetAllConfigurations
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: -1
+        - name: search
+          in: query
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ConfigurationDTO"
+  /v1/api/configurations/{configurationId}/advertisements:
+    put:
+      security:
+        - oauth2:
+            - write:admin
+      tags:
+        - Configuration
+      operationId: UpdateConfigurationAdvertisementByConfigurationId
+      parameters:
+        - name: configurationId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConfigurationAdvertisementsDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConfigurationDTO"
+  /v1/api/configurations/{configurationId}/versionState:
+    put:
+      security:
+        - oauth2:
+            - write:admin
+      tags:
+        - Configuration
+      operationId: UpdateConfigurationVersionStateByConfigurationId
+      parameters:
+        - name: configurationId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConfigurationAdvertisementsDTO"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConfigurationDTO"
+
+components:
+  securitySchemes:
+    oauth2:
+      type: http
+      scheme: bearer
+  schemas:
+    UniversityDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        creationDate:
+          type: string
+          format: date-time
+        modificationDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+          nullable: true
+        abbreviation:
+          type: string
+          nullable: true
+    FacultyDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        creationDate:
+          type: string
+          format: date-time
+        modificationDate:
+          type: string
+          format: date-time
+        logo:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+    SchoolYearDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        creationDate:
+          type: string
+          format: date-time
+        modificationDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+          nullable: true
+    Language:
+      type: string
+      enum:
+        - FR
+        - EN
+    AccountDTO:
+      type: object
+      required:
+        - language
+      properties:
+        id:
+          type: string
+          nullable: true
+        creationDate:
+          type: string
+          format: date-time
+        modificationDate:
+          type: string
+          format: date-time
+        verified:
+          type: boolean
+          nullable: false
+        universities:
+          type: array
+          items:
+            $ref: "#/components/schemas/UniversityDTO"
+          nullable: true
+        faculties:
+          type: array
+          items:
+            $ref: "#/components/schemas/FacultyDTO"
+          nullable: true
+        schoolYears:
+          type: array
+          items:
+            $ref: "#/components/schemas/SchoolYearDTO"
+          nullable: true
+        email:
+          type: string
+          nullable: true
+        password:
+          type: string
+          nullable: true
+        oldPassword:
+          type: string
+          nullable: true
+        firstName:
+          type: string
+          nullable: true
+        lastName:
+          type: string
+          nullable: true
+        language:
+          $ref: "#/components/schemas/Language"
+        externalId:
+          type: string
+          nullable: true
+        isPremium:
+          type: boolean
+        lastSeen:
+          type: string
+          format: date-time
+          nullable: true
+        pictureUrl:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        numberOfSubscribers:
+          type: number
+          format: double
+        numberOfSubscriptions:
+          type: number
+          format: double
+        numberOfPodcasts:
+          type: number
+          format: double
+        tags:
+          type: array
+          items:
+            $ref: "#/components/schemas/TagDTO"
+          nullable: true
+        subscribers:
+          type: array
+          items:
+            $ref: "#/components/schemas/AccountDTO"
+          nullable: true
+        subscriptions:
+          type: array
+          items:
+            $ref: "#/components/schemas/AccountDTO"
+          nullable: true
+        username:
+          type: string
+          nullable: true
+        masterClass:
+          type: boolean
+    AdvertisementDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        creationDate:
+          type: string
+          format: date-time
+        modificationDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+          nullable: true
+        company:
+          type: string
+          nullable: true
+        callToActionUrl:
+          type: string
+          nullable: true
+        audioUrl:
+          type: string
+          nullable: true
+        pictureUrl:
+          type: string
+          nullable: true
+        numberOfPlays:
+          type: number
+          format: double
+        target:
+          type: integer
+          format: int32
+          nullable: true
+        universities:
+          type: array
+          items:
+            $ref: "#/components/schemas/UniversityDTO"
+          nullable: true
+        faculties:
+          type: array
+          items:
+            $ref: "#/components/schemas/FacultyDTO"
+          nullable: true
+        schoolYears:
+          type: array
+          items:
+            $ref: "#/components/schemas/SchoolYearDTO"
+          nullable: true
+        tags:
+          type: array
+          items:
+            $ref: "#/components/schemas/TagDTO"
+          nullable: true
+    ChapterDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        creationDate:
+          type: string
+          format: date-time
+        modificationDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+          nullable: true
+        startTime:
+          type: integer
+          format: int64
+        endTime:
+          type: integer
+          format: int64
+    PodcastState:
+      type: string
+      enum:
+        - UNKNOWN
+        - UPLOADED
+        - PUBLISHED
+    PodcastDTO:
+      type: object
+      required:
+        - podcastState
+        - playlist
+        - advertisement
+      properties:
+        id:
+          type: string
+          nullable: true
+        creationDate:
+          type: string
+          format: date-time
+        modificationDate:
+          type: string
+          format: date-time
+        podcastState:
+          $ref: "#/components/schemas/PodcastState"
+        playlistId:
+          type: string
+          nullable: true
+        playlist:
+          $ref: "#/components/schemas/PlaylistDTO"
+        name:
+          type: string
+          nullable: true
+        size:
+          type: string
+          nullable: true
+        duration:
+          type: number
+          format: double
+        url:
+          type: string
+          nullable: true
+        coverUrl:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        creatorId:
+          type: string
+          nullable: true
+        creator:
+          $ref: "#/components/schemas/AccountDTO"
+          nullable: true
+        isListened:
+          type: boolean
+        isUploaded:
+          type: boolean
+        isSaved:
+          type: boolean
+        pdfUrl:
+          type: string
+          nullable: true
+        pdfName:
+          type: string
+          nullable: true
+        startTime:
+          type: integer
+          format: int64
+        advertisement:
+          $ref: "#/components/schemas/AdvertisementDTO"
+        nextPodcastId:
+          type: string
+          nullable: true
+        amountOfPlays:
+          type: integer
+          format: int32
+        nbrOfLikes:
+          type: integer
+          format: int32
+        cursus:
+          type: array
+          items:
+            $ref: "#/components/schemas/CursusDTO"
+          nullable: true
+        tags:
+          type: array
+          items:
+            $ref: "#/components/schemas/TagDTO"
+          nullable: true
+        playlists:
+          type: array
+          items:
+            $ref: "#/components/schemas/PlaylistDTO"
+          nullable: true
+        nbrOfComments:
+          type: integer
+          format: int32
+    CreatePodcastDTO:
+      type: object
+      required:
+        - name
+        - url
+        - coverUrl
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+        coverUrl:
+          type: string
+        description:
+          type: string
+        pdfUrl:
+          type: string
+          nullable: true
+        pdfName:
+          type: string
+          nullable: true
+        cursusIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          nullable: true
+        tagIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          nullable: true
+        playlistIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          nullable: true
+    DeviceType:
+      type: string
+      enum:
+        - UNKNOWN
+        - ANDROID
+        - APPLE
+    DeviceDTO:
+      type: object
+      required:
+        - type
+      properties:
+        id:
+          type: string
+          nullable: true
+        creationDate:
+          type: string
+          format: date-time
+        modificationDate:
+          type: string
+          format: date-time
+        token:
+          type: string
+          nullable: true
+        accountId:
+          type: string
+          nullable: true
+        type:
+          $ref: "#/components/schemas/DeviceType"
+    FileDTO:
+      type: object
+      properties:
+        file:
+          type: string
+          nullable: true
+        fileName:
+          type: string
+          nullable: true
+        fileExtension:
+          type: string
+          nullable: true
+        fileUrl:
+          type: string
+          nullable: true
+    NotificationDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        creationDate:
+          type: string
+          format: date-time
+        modificationDate:
+          type: string
+          format: date-time
+        title:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        url:
+          type: string
+          nullable: true
+        universities:
+          type: array
+          items:
+            $ref: "#/components/schemas/UniversityDTO"
+          nullable: true
+        faculties:
+          type: array
+          items:
+            $ref: "#/components/schemas/FacultyDTO"
+          nullable: true
+        schoolYears:
+          type: array
+          items:
+            $ref: "#/components/schemas/SchoolYearDTO"
+          nullable: true
+        tokenIds:
+          type: array
+          items:
+            type: string
+          nullable: true
+    CreateNotificationDTO:
+      type: object
+      required:
+        - title
+        - description
+        - url
+        - tokenIds
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+        tokenIds:
+          type: array
+          items:
+            type: string
+          nullable: true
+    PurchaseState:
+      type: string
+      enum:
+        - UNKNOWN
+        - UNVALIDATED
+        - VALIDATED
+        - SERVER_VALIDATED
+    PurchaseDevice:
+      type: string
+      enum:
+        - UNKNOWN
+        - ANDROID
+        - APPLE
+    PurchaseType:
+      type: string
+      enum:
+        - UNKNOWN
+        - MONTHLY_SUBSCRIPTION
+        - ANNUAL_SUBSCRIPTION
+    PurchaseDTO:
+      type: object
+      required:
+        - platform
+        - state
+        - account
+        - purchaseType
+      properties:
+        id:
+          type: string
+          nullable: true
+        creationDate:
+          type: string
+          format: date-time
+        modificationDate:
+          type: string
+          format: date-time
+        externalId:
+          type: string
+          nullable: true
+        environment:
+          type: string
+          nullable: true
+        platform:
+          $ref: "#/components/schemas/PurchaseDevice"
+        expirationDate:
+          type: string
+          format: date-time
+        state:
+          $ref: "#/components/schemas/PurchaseState"
+        accountId:
+          type: string
+          nullable: true
+        account:
+          $ref: "#/components/schemas/AccountDTO"
+        purchaseType:
+          $ref: "#/components/schemas/PurchaseType"
+    StatsDTO:
+      type: object
+      properties:
+        totalPublishedPodcasts:
+          type: integer
+          format: int32
+        totalUnpublishedPodcasts:
+          type: integer
+          format: int32
+        totalAccounts:
+          type: integer
+          format: int32
+        todayAccountsCreated:
+          type: integer
+          format: int32
+        accountConnectedToday:
+          type: integer
+          format: int32
+        extras:
+          type: array
+          items:
+            type: string
+          nullable: true
+        totalPodcasts:
+          type: integer
+          format: int32
+        totalPlaylist:
+          type: integer
+          format: int32
+        totalPlaylistsCreatedByUsers:
+          type: integer
+          format: int32
+        totalPodcastsCreatedByUsers:
+          type: integer
+          format: int32
+        totalPodcastCreatedByAdmin:
+          type: integer
+          format: int32
+        totalPlaylistCreatedByAdmin:
+          type: integer
+          format: int32
+        totalPurchases:
+          type: integer
+          format: int32
+    TagType:
+      type: string
+      enum:
+        - THEME
+        - HASHTAG
+    TagDTO:
+      type: object
+      required:
+        - tagType
+      properties:
+        id:
+          type: string
+          nullable: true
+        creationDate:
+          type: string
+          format: date-time
+        modificationDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        iconUrl:
+          type: string
+        tagType:
+          $ref: "#/components/schemas/TagType"
+    PlaylistDTO:
+      type: object
+      required:
+        - creator
+      properties:
+        id:
+          type: string
+          nullable: true
+        creationDate:
+          type: string
+          format: date-time
+        modificationDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        cover:
+          type: string
+        numberOfPodcasts:
+          type: integer
+          format: int32
+        creatorId:
+          type: string
+          nullable: true
+        masterClass:
+          type: boolean
+        creator:
+          $ref: "#/components/schemas/AccountDTO"
+    GetAllPodcastsRequest:
+      type: object
+      properties:
+        facultyIds:
+          type: array
+          items:
+            type: string
+        universityIds:
+          type: array
+          items:
+            type: string
+        schoolYearIds:
+          type: array
+          items:
+            type: string
+    ItemType:
+      type: string
+      enum:
+        - PODCAST
+        - PLAYLIST
+        - MASTERCLASS
+        - ACCOUNT
+        - ALL
+    SearchItemDTO:
+      type: object
+      required:
+        - creator
+        - itemType
+      properties:
+        accountSearchId:
+          type: string
+          nullable: true
+        itemId:
+          type: string
+          nullable: true
+        creationDate:
+          type: string
+          format: date-time
+        modificationDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+          nullable: true
+        accountId:
+          type: string
+          nullable: true
+        creator:
+          $ref: "#/components/schemas/AccountDTO"
+        itemType:
+          $ref: "#/components/schemas/ItemType"
+        nbrOfPodcasts:
+          type: integer
+          format: int32
+        nbrOfListeners:
+          type: integer
+          format: int32
+        nbrOfSubscribers:
+          type: integer
+          format: int32
+        cover:
+          type: string
+          nullable: true
+    RecommendationDTO:
+      type: object
+      required:
+        - creator
+        - itemType
+      properties:
+        accountSearchId:
+          type: string
+          nullable: true
+        itemId:
+          type: string
+          nullable: true
+        creationDate:
+          type: string
+          format: date-time
+        modificationDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+          nullable: true
+        accountId:
+          type: string
+          nullable: true
+        creator:
+          $ref: "#/components/schemas/AccountDTO"
+        itemType:
+          $ref: "#/components/schemas/ItemType"
+        cover:
+          type: string
+          nullable: true
+    VerifyAccountUsernameDTO:
+      type: object
+      required:
+        - username
+      properties:
+        username:
+          type: string
+    CommentDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        creationDate:
+          type: string
+          format: date-time
+        modificationDate:
+          type: string
+          format: date-time
+        accountId:
+          type: string
+          nullable: true
+        account:
+          $ref: "#/components/schemas/AccountDTO"
+          nullable: true
+        text:
+          type: string
+          nullable: true
+        responseToCommentId:
+          type: string
+          nullable: true
+    CursusDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        creationDate:
+          type: string
+          format: date-time
+        modificationDate:
+          type: string
+          format: date-time
+        universityId:
+          type: string
+          nullable: true
+        university:
+          $ref: "#/components/schemas/UniversityDTO"
+          nullable: true
+        facultyId:
+          type: string
+          nullable: true
+        faculty:
+          $ref: "#/components/schemas/FacultyDTO"
+          nullable: true
+        schoolYearId:
+          type: string
+          nullable: true
+        schoolYear:
+          $ref: "#/components/schemas/SchoolYearDTO"
+          nullable: true
+    ConfigurationDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        creationDate:
+          type: string
+          format: date-time
+        modificationDate:
+          type: string
+          format: date-time
+        os:
+          type: string
+          nullable: true
+        version:
+          type: string
+          nullable: true
+        adsEnabled:
+          type: boolean
+          nullable: true
+        disabled:
+          type: boolean
+          nullable: true
+    ConfigurationAdvertisementsDTO:
+      type: object
+      properties:
+        isEnabled:
+          type: boolean
+    SearchItemPagingDTO:
+      type: object
+      properties:
+        data:
+          type: array
+          description: The array of structure
+          items:
+            $ref: "#/components/schemas/SearchItemDTO"
+        nbPages:
+          type: integer
+          description: The number of pages
+          format: int64
+        page:
+          type: integer
+          description: The current page
+          format: int64
+        size:
+          type: integer
+          description: The current size
+          format: int64
+        totalAmount:
+          type: integer
+          description: The total amount of structure in database
+          format: int64
+      description: A paging
+    PodcastPagingDTO:
+      type: object
+      properties:
+        data:
+          type: array
+          description: The array of structure
+          items:
+            $ref: "#/components/schemas/PodcastDTO"
+        nbPages:
+          type: integer
+          description: The number of pages
+          format: int64
+        page:
+          type: integer
+          description: The current page
+          format: int64
+        size:
+          type: integer
+          description: The current size
+          format: int64
+        totalAmount:
+          type: integer
+          description: The total amount of structure in database
+          format: int64
+      description: A paging
+    PlaylistPagingDTO:
+      type: object
+      properties:
+        data:
+          type: array
+          description: The array of structure
+          items:
+            $ref: "#/components/schemas/PlaylistDTO"
+        nbPages:
+          type: integer
+          description: The number of pages
+          format: int64
+        page:
+          type: integer
+          description: The current page
+          format: int64
+        size:
+          type: integer
+          description: The current size
+          format: int64
+        totalAmount:
+          type: integer
+          description: The total amount of structure in database
+          format: int64
+      description: A paging
+    UniversityPagingDTO:
+      type: object
+      properties:
+        data:
+          type: array
+          description: The array of structure
+          items:
+            $ref: "#/components/schemas/UniversityDTO"
+        nbPages:
+          type: integer
+          description: The number of pages
+          format: int64
+        page:
+          type: integer
+          description: The current page
+          format: int64
+        size:
+          type: integer
+          description: The current size
+          format: int64
+        totalAmount:
+          type: integer
+          description: The total amount of structure in database
+          format: int64
+      description: A paging
+    TagPagingDTO:
+      type: object
+      properties:
+        data:
+          type: array
+          description: The array of structure
+          items:
+            $ref: "#/components/schemas/TagDTO"
+        nbPages:
+          type: integer
+          description: The number of pages
+          format: int64
+        page:
+          type: integer
+          description: The current page
+          format: int64
+        size:
+          type: integer
+          description: The current size
+          format: int64
+        totalAmount:
+          type: integer
+          description: The total amount of structure in database
+          format: int64
+      description: A paging
+    CursusPagingDTO:
+      type: object
+      properties:
+        data:
+          type: array
+          description: The array of structure
+          items:
+            $ref: "#/components/schemas/CursusDTO"
+        nbPages:
+          type: integer
+          description: The number of pages
+          format: int64
+        page:
+          type: integer
+          description: The current page
+          format: int64
+        size:
+          type: integer
+          description: The current size
+          format: int64
+        totalAmount:
+          type: integer
+          description: The total amount of structure in database
+          format: int64
+      description: A paging

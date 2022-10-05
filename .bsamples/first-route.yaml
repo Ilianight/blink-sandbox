@@ -1,0 +1,10 @@
+openapi: 3.0.2
+info:
+  title: Protected API
+  version: v1
+paths:
+  /pet:
+    post:
+      tags:
+        - pet
+      operationId: addPet
